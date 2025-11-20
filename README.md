@@ -66,6 +66,5 @@ The only important thing to know is that `rkseesaw` takes five arguments:
 
 A live interactive implementation can be found in the link below:
 
-[]()
-
+[Live Demo](https://calugo.github.io/Shishi_Odoshi_Mechanical_Neuron/)
 

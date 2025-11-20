@@ -4,7 +4,11 @@ Set of codes to solve the equation:
 
 $$\ddot{\Phi} = k\sin \Phi$$
 
-With $ k=-\left( \frac{g}{l} \right) \frac{ 6(m_1 - m_2) }{ m_b+3(m_1-m_2)} $ This is the last module on the entries I made for the **exitable systems** series, which are described here. And were used for different outreach activities and courses on **Systems Biology**, **Ordinary Differential Equations** and **Computer Vision** I carried out this last summer (2025).  
+With  
+
+$$k=-\left( \frac{g}{l} \right) \frac{ 6(m_1 - m_2) }{ m_b+3(m_1-m_2)}$$
+
+This is the last module on the entries I made for the **exitable systems** series, which are described here. And were used for different outreach activities and courses on **Systems Biology**, **Ordinary Differential Equations** and **Computer Vision** I carried out this last summer (2025).  
 
 As discussed in more detail here. The above equation is nothing but the one of a composed physical pendulum. The rigid rod of mass $m_b$, length $l$ pivoting about an axis crossing the centre of mass of the rod and  with two masses attached at each end of the rod. 
 

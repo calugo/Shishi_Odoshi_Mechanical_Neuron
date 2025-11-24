@@ -10,7 +10,7 @@ double arr[2];
 
 extern "C"{
 ///
-double boundaryB(double x, double y,  double l,double h2,double m2, double *arr ){
+double boundaryB(double gm,double x, double y,  double l,double h2,double m2, double *arr ){
 
     double pn = - M_PI_2- asin(2*h2/l);
     double mrel = 0.0;
@@ -18,7 +18,8 @@ double boundaryB(double x, double y,  double l,double h2,double m2, double *arr 
     if(x<pn){
         xn = pn;
         yn = 0.0;
-        mrel = 0.65*m2;
+        //mrel = 0.65*m2;
+        mrel = gm*m2;
     }
     else{
         xn = x;
@@ -31,13 +32,14 @@ double boundaryB(double x, double y,  double l,double h2,double m2, double *arr 
     return mrel;
 }
 ///
-double m2t(double x, double m2, double dt, double m1, double h,double l, double xth ){
+double m2t(double x, double m2, double dt, double m1, double h,double l, double xth, double Is){
 
     double mn;
     mn=m2;
     double phib = -acos((2*h)/l);
     if(x>= (phib-xth) ){
-        mn+=dt*0.0016;
+        //mn+=dt*0.0016;
+        mn+=dt*Is;
         if (mn>2.0*m1){mn=2.0*m1;}
     }
 
@@ -94,7 +96,7 @@ void rk(double x, double y, double gn, double *arr){
     arr[1] = y;
 }
 ////
-int integrals(double xo, double h, double h2, double *sol, int length){
+int integrals(double Is, double dm, double xo, double h, double h2, double *sol, int length){
 //int integrals(double *sol, int length){
 
 
@@ -128,7 +130,7 @@ int integrals(double xo, double h, double h2, double *sol, int length){
         
         
         if (t>2.0){
-            m2 = m2t(phi, m2, dt, m1, h, l, xo );
+            m2 = m2t(phi, m2, dt, m1, h, l, xo, Is);
         }
     
         Qn = -(g/l)*6*( (m1-m2) / ( mb + 3*(m1-m2) ) );
@@ -137,7 +139,7 @@ int integrals(double xo, double h, double h2, double *sol, int length){
         phi=arr[0];dtphi=arr[1];
         boundaryA(phi,dtphi,l,h,arr);
         phi=arr[0];dtphi = arr[1];
-        m2 = boundaryB(phi,dtphi,l,h2,m2,arr);
+        m2 = boundaryB(dm, phi,dtphi,l,h2,m2,arr);
         phi=arr[0];dtphi = arr[1];
         t+=dt;
 

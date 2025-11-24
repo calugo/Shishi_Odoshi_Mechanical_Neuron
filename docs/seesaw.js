@@ -10,9 +10,9 @@ let container, camera, renderer;
 let gui;
 
 /////////////////
-let L=10.0, H=0.5, H2=0.0;
+let L=10.0, H=0.5, H2=0.0, Dm=0.65, Is = 0.0016;
 let Xo;
-let run_button, clear_button,play_button, h1_slider, xo_slider,h2_slider;
+let run_button, clear_button,play_button, h1_slider, xo_slider,h2_slider,dm_slider,is_slider;
 let RN = 0.0;
 //////////////////
 const nx0 = 45.0 
@@ -23,7 +23,7 @@ const ny1 = 20.0;
 const Np = 10000;
 const NL = 2*Np;
 const mymod = await Module();
-var  rkseesaw = mymod.cwrap('integrals', 'number', ['number','number','number','number','number']);
+var  rkseesaw = mymod.cwrap('integrals', 'number', ['number','number','number','number','number','number','number']);
 let rn = new Float64Array( Array(NL).fill(1.0) );
 let nDataBytes = rn.length * rn.BYTES_PER_ELEMENT;
 let dataPtr = mymod._malloc(nDataBytes);
@@ -169,11 +169,14 @@ function initGUI(){
 		'H': H,
 		'H2': H2,
 		'Xo': Xo,
+		'km': Dm,
+		'Is': Is,
 		'Run':  RK,
 		'Play': play,
 		'Stop': clear,
 		'X': true,
 		};
+
 
 	h1_slider = gui.add(param, 'H',0.2,0.8,0.01 ).onChange( function (val){
 		H = val;
@@ -215,6 +218,14 @@ function initGUI(){
 		Qu.needsUpdate =  true;
 	});
 
+	dm_slider = gui.add(param, 'km',0.0,0.9,0.01).onChange(function(val){
+		Dm = val;
+	});
+
+	is_slider = gui.add(param, 'Is',0.0015,0.0017,0.00001).onChange(function(val){
+		Is = val;
+	});
+
 	run_button = gui.add(param,'Run');
 	play_button = gui.add(param,'Play').disable();
 	clear_button = gui.add(param,'Stop').disable();
@@ -224,13 +235,10 @@ function RK(){
 
 	console.log("RK");
 	console.log(Xo);
-	//console.log(H2);
-	rkseesaw(Xo,H,H2,dataHeap.byteOffset,rn.length)
+	rkseesaw(Is,Dm,Xo,H,H2,dataHeap.byteOffset,rn.length)
 	var result = new Float64Array(dataHeap.buffer, dataHeap.byteOffset, rn.length);
-	//console.log(result[0])
 	/////
 	reset_xt();
-	//console.log(scenes[0].children)
 	
 	let VX = scenes[0].children[5].geometry.attributes.position
 	let VY = scenes[0].children[6].geometry.attributes.position
@@ -268,20 +276,21 @@ function play(){
 	h1_slider.disable(true);
 	h2_slider.disable(true);
 	xo_slider.disable(true);
+	dm_slider.disable(true);
+	is_slider.disable(true);
 	k = 0;
 }
 
 function clear(){
 	console.log('Clear');
 	RN=0.0;
-	//let Q = scenes[0].children[4].geometry.attributes.position;
-	//Q.setXYZ(0,0.0,0.0,0.0);
-	//Q.needsUpdate = true;
 	play_button.disable(false);
 	run_button.disable(false);
 	h1_slider.disable(false);
 	h2_slider.disable(false);
 	xo_slider.disable(false);
+	is_slider.disable(false);
+	dm_slider.disable(false);
 
 }
 
@@ -311,12 +320,13 @@ function initMeshes() {
 					const textT = new THREE.Mesh(gT,textMaterial);
 
 
-					const XYZsh = font.generateShapes("m(t)",3.0);
+					//const XYZsh = font.generateShapes("m(t)",3.0);
+					const XYZsh = font.generateShapes("\u0394m[t]*",3.0);
 					const gXYZ = new THREE.ShapeGeometry(XYZsh);
 					const textXYZ = new THREE.Mesh(gXYZ,textMaterial);
 
 					textT.position.set(40.5,-11.1,0);
-					textXYZ.position.set(-55,-5.0,0);
+					textXYZ.position.set(-58,-5.0,0);
 
 
 					scenes[0].add(textT)					
@@ -445,7 +455,7 @@ function initMeshes() {
 			const textTx = new THREE.Mesh(gTx,textMaterial);
 
 
-			const XYZshx = font.generateShapes("\u03B8(t)",3.0);
+			const XYZshx = font.generateShapes("\u03B8[t]",3.0);
 			const gXYZx = new THREE.ShapeGeometry(XYZshx);
 			const textXYZx = new THREE.Mesh(gXYZx,textMaterial);
 
@@ -474,8 +484,6 @@ function reset_xt(){
 	let M2 = scenes[0].children[8].geometry.attributes.position
 	M1.setXYZ(0,T[0]-nx0,ny0*(X[0]/Math.PI)-1.0*ny0,0.0);
 	M2.setXYZ(0,T[0]-nx0,ny0*(Y[0])-ny0,0.0);
-	//scenes[0].children[7].geometry.computeBoundingSphere();
-	//scenes[0].children[8].geometry.computeBoundingSphere();
 	M1.needsUpdate = true;
 	M2.needsUpdate = true;
 
@@ -516,15 +524,9 @@ function animate() {
 				let U = scenes[1].children[3];
 				U.rotation.z = -0.5*Math.PI + X[k];
 				U.needsUpdate = true
-				//let M = scene.children[4].geometry.attributes.position
-				//M.setXYZ(0,X[k]-Mx,Y[k]-My+ny1,Z[k]-Mz)
-				//M.needsUpdate = true;
-				//console.log('plop')
 			}
 
 			renderer.setScissor(0,window.innerHeight/2, window.innerWidth, window.innerHeight/2 );
-				//console.log(scene.children)
-			//scene.children[2].rotation.y = 0.0*(Date.now()*0.001);			
 			}
 			m=1;
 

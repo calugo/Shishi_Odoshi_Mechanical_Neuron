@@ -321,7 +321,7 @@ function initMeshes() {
 
 
 					//const XYZsh = font.generateShapes("m(t)",3.0);
-					const XYZsh = font.generateShapes("\u0394m[t]*",3.0);
+					const XYZsh = font.generateShapes("\u0394m*[t]",3.0);
 					const gXYZ = new THREE.ShapeGeometry(XYZsh);
 					const textXYZ = new THREE.Mesh(gXYZ,textMaterial);
 

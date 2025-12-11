@@ -10,7 +10,7 @@ let container, camera, renderer;
 let gui;
 
 /////////////////
-let L=10.0, H=0.5, H2=0.0, Dm=0.65, Is = 0.0016;
+let L=10.0, H=0.27, H2=0.36, Dm=0.712, Is = 0.00159;
 let Xo;
 let run_button, clear_button,play_button, h1_slider, xo_slider,h2_slider,dm_slider,is_slider;
 let RN = 0.0;
@@ -93,9 +93,9 @@ function init() {
 		T[i]=i*1e-2;
 	}
 
-	H = 0.5;
-	Xo = 0.5 //Math.PI*0.5;
-	H2 = 0.0; 
+	H = 0.27;
+	Xo = 0.52 //Math.PI*0.5;
+	H2 = 0.36; 
 
 	container = document.querySelector( '.container' );
 
@@ -218,7 +218,7 @@ function initGUI(){
 		Qu.needsUpdate =  true;
 	});
 
-	dm_slider = gui.add(param, 'km',0.0,0.9,0.01).onChange(function(val){
+	dm_slider = gui.add(param, 'km',0.0,0.9,0.001).onChange(function(val){
 		Dm = val;
 	});
 

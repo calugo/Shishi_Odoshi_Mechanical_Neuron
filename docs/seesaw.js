@@ -321,12 +321,12 @@ function initMeshes() {
 
 
 					//const XYZsh = font.generateShapes("m(t)",3.0);
-					const XYZsh = font.generateShapes("\u0394m*[t]",3.0);
+					const XYZsh = font.generateShapes("\u0394m",3.0);
 					const gXYZ = new THREE.ShapeGeometry(XYZsh);
 					const textXYZ = new THREE.Mesh(gXYZ,textMaterial);
 
 					textT.position.set(40.5,-11.1,0);
-					textXYZ.position.set(-58,-5.0,0);
+					textXYZ.position.set(-52,-5.0,0);
 
 
 					scenes[0].add(textT)					
@@ -450,17 +450,17 @@ function initMeshes() {
 
 		loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",function(font){
 
-			const Tshx = font.generateShapes('t (final = 100)',3.0);
+			const Tshx = font.generateShapes('t=100',3.0);
 			const gTx = new THREE.ShapeGeometry(Tshx);
 			const textTx = new THREE.Mesh(gTx,textMaterial);
 
 
-			const XYZshx = font.generateShapes("\u03B8[t]",3.0);
+			const XYZshx = font.generateShapes("\u03B8",3.0);
 			const gXYZx = new THREE.ShapeGeometry(XYZshx);
 			const textXYZx = new THREE.Mesh(gXYZx,textMaterial);
 
 			textTx.position.set(50.5,-24.1,0);
-			textXYZx.position.set(-54,-13.0,0);
+			textXYZx.position.set(-49,-13.0,0);
 			
 
 			scenes[0].add(textTx)					

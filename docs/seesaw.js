@@ -417,7 +417,7 @@ function initMeshes() {
 		pxt.push(0.0,-ny0,0.0);
 		const pgnx =  new THREE.BufferGeometry();
 		const Xpcolor = new THREE.Color(); 
-		Xpcolor.setRGB(1.00,0.00,0.000, THREE.SRGBColorSpace);
+		Xpcolor.setRGB(1.00,1.00,1.00, THREE.SRGBColorSpace);
 		const XpNMaterial =  new THREE.PointsMaterial( { size: 5.5, vertexColors: true } );
 		pgnx.setAttribute( 'color', new THREE.Float32BufferAttribute( Xpcolor, 3 ) );
 		pgnx.setAttribute( 'position', new THREE.Float32BufferAttribute( pxt, 3 ) );
@@ -428,7 +428,7 @@ function initMeshes() {
 		pyt.push(0.0,-ny0,0.0);
 		const pgny =  new THREE.BufferGeometry();
 		const Ypcolor = new THREE.Color(); 
-		Ypcolor.setRGB(0.999,0.7294,0.011, THREE.SRGBColorSpace);
+		Ypcolor.setRGB(1.0,1.0,1.0, THREE.SRGBColorSpace);
 		const YpNMaterial =  new THREE.PointsMaterial( { size: 5.5, vertexColors: true } );
 		pgny.setAttribute( 'color', new THREE.Float32BufferAttribute( Ypcolor, 3 ) );
 		pgny.setAttribute( 'position', new THREE.Float32BufferAttribute( pxt, 3 ) );
